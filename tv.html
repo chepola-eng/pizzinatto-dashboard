@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8"/>
+<title>Pizzinatto — TV</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#0a0d14;--sf:#111520;--bd:#1a2035}
+html,body{height:100vh;overflow:hidden;background:var(--bg);font-family:'Inter',system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+
+.root{display:grid;grid-template-rows:80fr 20fr;height:100vh;gap:0;padding:12px;gap:10px}
+
+/* ── TOP 80% — 4 cards lado a lado ── */
+.cards{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;min-height:0}
+
+.card{border-radius:16px;border:1px solid;display:flex;flex-direction:column;justify-content:center;align-items:center;padding:20px;text-align:center;min-height:0}
+
+/* Cores por card */
+.card-pf  { border-color:#ffffff22; background:#ffffff08; }
+.card-pj  { border-color:#f7c94f44; background:#f7c94f08; }
+.card-loja{ border-color:#4fc3f744; background:#4fc3f708; }
+.card-lead{ border-color:#1dd6a044; background:#1dd6a008; }
+
+.c-label{
+  font-size:clamp(14px,2vw,28px);
+  font-weight:700;
+  letter-spacing:.5px;
+  text-transform:uppercase;
+  margin-bottom:16px;
+  opacity:.85;
+}
+.c-value{
+  font-size:clamp(80px,14vw,220px);
+  font-weight:900;
+  line-height:1;
+  letter-spacing:-4px;
+}
+
+.card-pf   .c-label, .card-pf   .c-value { color:#ffffff; }
+.card-pj   .c-label, .card-pj   .c-value { color:#f7c94f; }
+.card-loja .c-label, .card-loja .c-value { color:#4fc3f7; }
+.card-lead .c-label, .card-lead .c-value { color:#1dd6a0; }
+
+/* ── BOTTOM 20% — atendentes horizontal ── */
+.bottom{background:var(--sf);border:1px solid var(--bd);border-radius:14px;padding:10px 16px;display:flex;flex-direction:column;min-height:0;overflow:hidden}
+.bottom-title{font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:#3a4268;margin-bottom:8px;flex-shrink:0}
+.bars-h{display:flex;flex-direction:row;gap:10px;flex:1;overflow:hidden;align-items:stretch}
+
+.bar-col{display:flex;flex-direction:column;align-items:center;gap:4px;flex:1;min-width:0}
+.bar-name-h{font-size:clamp(9px,1vw,13px);font-weight:700;color:#ccd6f6;text-align:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;width:100%}
+.bar-num-h{font-size:clamp(11px,1.2vw,16px);font-weight:900;text-align:center}
+.bar-track-v{flex:1;background:#1a2035;border-radius:4px;overflow:hidden;width:100%;display:flex;flex-direction:column;justify-content:flex-end}
+.bar-fill-v{width:100%;border-radius:4px;transition:height .6s ease}
+
+/* pill de status no canto */
+.status-pill{position:fixed;top:10px;right:10px;font-size:11px;font-weight:700;padding:4px 12px;border-radius:20px;z-index:10}
+.pl{background:rgba(29,214,160,.12);color:#1dd6a0}
+.pe{background:rgba(247,95,95,.12);color:#f75f5f}
+.ps{background:rgba(79,142,247,.12);color:#4f8ef7}
+.pd{background:rgba(247,201,79,.12);color:#f7c94f}
+.dot{width:6px;height:6px;border-radius:50%;background:currentColor;display:inline-block;margin-right:4px;animation:blink 2s infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
+</style>
+</head>
+<body>
+
+<div class="status-pill pd" id="sp"><span class="dot"></span><span id="st">Conectando...</span></div>
+
+<div class="root">
+
+  <!-- 80%: 4 cards -->
+  <div class="cards">
+    <div class="card card-pf">
+      <div class="c-label">Aguardando PF</div>
+      <div class="c-value" id="w_pf">—</div>
+    </div>
+    <div class="card card-pj">
+      <div class="c-label">Aguardando PJ</div>
+      <div class="c-value" id="w_pj">—</div>
+    </div>
+    <div class="card card-loja">
+      <div class="c-label">Loja Online</div>
+      <div class="c-value" id="w_loja">—</div>
+    </div>
+    <div class="card card-lead">
+      <div class="c-label">Leads</div>
+      <div class="c-value" id="leads_total">—</div>
+    </div>
+  </div>
+
+  <!-- 20%: atendentes horizontal -->
+  <div class="bottom">
+    <div class="bottom-title">Atendentes ativos</div>
+    <div class="bars-h" id="bars-h">
+      <div style="color:#3a4268;font-size:12px;align-self:center">Aguardando dados...</div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+const BASE     = window.location.origin;
+const PROXY    = BASE + '/proxy';
+const INTERVAL = 60;
+const COLORS   = ['#ffffff','#f7c94f','#4fc3f7','#1dd6a0','#a78bfa','#f75f5f','#ffb74d','#f48fb1','#80cbc4','#81c784'];
+
+function matchDept(name,key){
+  const n=(name||'').trim();
+  if(key==='pf')   return n==='Comercial - PF'||n==='Comercial PF';
+  if(key==='pj')   return n==='Comercial - PJ'||n==='Comercial PJ';
+  if(key==='loja') return n==='Loja Online'||n==='Loja - Online';
+  return false;
+}
+
+function setSt(s,t){
+  const m={demo:'pd',live:'pl',error:'pe',sync:'ps'};
+  document.getElementById('sp').className='status-pill '+(m[s]||'pd');
+  document.getElementById('st').textContent=t;
+}
+function setVal(id,val){
+  if(val===undefined||val===null||val==='')return;
+  const el=document.getElementById(id);if(!el)return;
+  el.textContent=val;
+}
+function initials(n){const p=(n||'?').trim().split(' ');return(p[0][0]+(p[1]?p[1][0]:'')).toUpperCase();}
+
+function renderBarsH(list){
+  if(!list||!list.length)return;
+  const sorted=list.sort((a,b)=>b.count-a.count).slice(0,14);
+  const max=sorted[0].count||1;
+  document.getElementById('bars-h').innerHTML=sorted.map((a,i)=>{
+    const col=COLORS[i%COLORS.length];
+    const pct=Math.round((a.count/max)*100);
+    return `<div class="bar-col">
+      <div class="bar-num-h" style="color:${col}">${a.count}</div>
+      <div class="bar-track-v">
+        <div class="bar-fill-v" style="height:${pct}%;background:${col}88"></div>
+      </div>
+      <div class="bar-name-h">${a.name.split(' ')[0]}</div>
+    </div>`;
+  }).join('');
+}
+
+async function fetchOne(path,qs=''){
+  try{
+    const r=await fetch(PROXY+path+qs);
+    const txt=await r.text();
+    let d;try{d=JSON.parse(txt);}catch(e){return null;}
+    if(d.__isHtml||d.__noToken||d.__tokenExpired)return null;
+    if(!r.ok)return null;
+    return d;
+  }catch(e){return null;}
+}
+
+async function doFetch(){
+  setSt('sync','...');
+  try{
+    const s=await fetch(BASE+'/status').then(r=>r.json());
+    if(!s.ok&&!s.hasCredentials){setSt('error','Sem login');return;}
+  }catch(e){setSt('error','Offline');return;}
+
+  const ov=await fetchOne('/overview/');
+  if(ov) setVal('leads_total', ov.qtd_screening_attendances);
+
+  const w=await fetchOne('/chats/metrics/','?status=waiting');
+  if(w){
+    (w?.data?.department||[]).forEach(item=>{
+      const name=item.name, qty=item.quantity??0;
+      if(matchDept(name,'pf'))   setVal('w_pf',   qty);
+      if(matchDept(name,'pj'))   setVal('w_pj',   qty);
+      if(matchDept(name,'loja')) setVal('w_loja',  qty);
+    });
+  }
+
+  const a=await fetchOne('/chats/metrics/','?status=active');
+  if(a){
+    const atts=a?.data?.attendant||[];
+    if(atts.length) renderBarsH(atts.map(x=>({name:x.name,count:x.quantity??0})));
+  }
+
+  if(ov||w||a) setSt('live','Ao vivo');
+  else setSt('error','Sem dados');
+}
+
+let timer=null;
+function startAuto(){if(timer)clearInterval(timer);doFetch();timer=setInterval(doFetch,INTERVAL*1000);}
+window.addEventListener('DOMContentLoaded',()=>startAuto());
+</script>
+</body>
+</html>

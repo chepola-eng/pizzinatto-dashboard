@@ -105,6 +105,16 @@ const server = http.createServer(async (req, res) => {
   const parsed  = url.parse(req.url, true);
   const reqPath = parsed.pathname || '/';
 
+  // Servir tv.html
+  if (reqPath === '/tv' || reqPath === '/tv.html') {
+    try {
+      const html = fs.readFileSync(path.join(__dirname, 'tv.html'), 'utf8');
+      res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8' });
+      res.end(html);
+    } catch(e) { res.writeHead(404); res.end('tv.html not found'); }
+    return;
+  }
+
   // Servir o dashboard.html na raiz
   if (reqPath === '/' || reqPath === '/dashboard.html') {
     try {
