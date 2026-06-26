@@ -7,10 +7,7 @@
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{--bg:#0b0e17;--sf:#121623;--sf2:#181d2e;--bd:#1e2540;--bd2:#2a3155;--tx:#e4eaf7;--mt:#5a6488;--dm:#3a4268;--bl:#4f8ef7;--gr:#1dd6a0;--ye:#f7c94f;--rd:#f75f5f;--pu:#a78bfa}
 html,body{height:100vh;overflow:hidden;background:var(--bg);color:var(--tx);font-family:'Inter',system-ui,sans-serif;-webkit-font-smoothing:antialiased}
-
 .root{display:grid;grid-template-rows:52px 1fr;height:100vh}
-
-/* HEADER */
 .hdr{background:var(--sf);border-bottom:1px solid var(--bd);padding:0 24px;display:flex;align-items:center;justify-content:space-between}
 .logo{font-size:20px;font-weight:800}.logo em{color:var(--bl);font-style:normal}.logo span{color:var(--mt);font-weight:400;font-size:14px;margin-left:10px}
 .hr{display:flex;align-items:center;gap:10px}
@@ -20,17 +17,10 @@ html,body{height:100vh;overflow:hidden;background:var(--bg);color:var(--tx);font
 @keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
 .clk{font-size:16px;color:var(--mt);font-variant-numeric:tabular-nums;font-weight:700}
 .btn{background:transparent;color:var(--mt);border:1px solid var(--bd2);border-radius:6px;padding:6px 14px;font-size:13px;cursor:pointer}
-.btn:hover{color:var(--tx)}.btn-b{background:var(--bl);color:#fff;border-color:var(--bl)}
-.btn-g{background:var(--gr);color:#0b0e17;border-color:var(--gr)}
-
-/* GRADE 2x2 */
+.btn:hover{color:var(--tx)}.btn-b{background:var(--bl);color:#fff;border-color:var(--bl)}.btn-g{background:var(--gr);color:#0b0e17;border-color:var(--gr)}
 .body{display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;gap:8px;padding:8px;overflow:hidden;height:100%}
-
-/* QUADRANTE BASE */
 .quad{background:var(--sf);border:1px solid var(--bd);border-radius:14px;padding:12px 16px;display:flex;flex-direction:column;overflow:hidden;min-height:0}
 .quad-title{font-size:12px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--dm);margin-bottom:8px;flex-shrink:0}
-
-/* Q1 — aguardando */
 .wait-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;flex:1;min-height:0}
 .wcard{background:var(--sf2);border:1px solid var(--bd);border-radius:12px;padding:12px 14px;position:relative;overflow:hidden;display:flex;flex-direction:column;justify-content:space-between;min-height:0}
 .wcard::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;border-radius:12px 12px 0 0}
@@ -41,8 +31,6 @@ html,body{height:100vh;overflow:hidden;background:var(--bg);color:var(--tx);font
 .wval.y{color:var(--ye)}.wval.b{color:var(--bl)}
 .wbadge{font-size:11px;font-weight:700;padding:3px 8px;border-radius:5px;display:inline-block;margin-top:6px}
 .bw{background:rgba(247,201,79,.1);color:var(--ye)}.bb{background:rgba(79,142,247,.1);color:var(--bl)}
-
-/* Q2 — totais */
 .totals-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;flex:1;min-height:0}
 .tcard{background:var(--sf2);border:1px solid var(--bd);border-radius:12px;padding:12px 14px;position:relative;overflow:hidden;display:flex;flex-direction:column;justify-content:space-between}
 .tcard::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;border-radius:12px 12px 0 0}
@@ -51,8 +39,6 @@ html,body{height:100vh;overflow:hidden;background:var(--bg);color:var(--tx);font
 .tval{font-size:clamp(40px,5vw,72px);font-weight:900;line-height:1;letter-spacing:-2px}
 .tval.r{color:var(--rd)}.tval.g{color:var(--gr)}.tval.p{color:var(--pu)}.tval.b{color:var(--bl)}
 .tsub{font-size:11px;color:var(--dm)}
-
-/* Q3 — deptos ativos */
 .dept-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;flex:1;min-height:0}
 .dcard{background:var(--sf2);border:1px solid var(--bd);border-radius:12px;padding:12px 14px;position:relative;overflow:hidden;display:flex;flex-direction:column;justify-content:space-between}
 .dcard::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;border-radius:12px 12px 0 0;background:var(--gr)}
@@ -60,8 +46,6 @@ html,body{height:100vh;overflow:hidden;background:var(--bg);color:var(--tx);font
 .ddept{font-size:15px;font-weight:800;color:var(--gr);margin:3px 0 6px}
 .dval{font-size:clamp(44px,5.5vw,80px);font-weight:900;line-height:1;letter-spacing:-2px;color:var(--gr)}
 .dbadge{font-size:11px;font-weight:700;padding:3px 8px;border-radius:5px;display:inline-block;margin-top:6px;background:rgba(29,214,160,.1);color:var(--gr)}
-
-/* Q4 — barras atendentes */
 .bars{display:flex;flex-direction:column;flex:1;overflow:hidden;justify-content:space-evenly;gap:4px}
 .bar-row{display:flex;align-items:center;gap:10px;flex-shrink:0}
 .bar-av{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;flex-shrink:0}
@@ -71,8 +55,6 @@ html,body{height:100vh;overflow:hidden;background:var(--bg);color:var(--tx);font
 .bar-num{font-size:16px;font-weight:900;flex-shrink:0;margin-left:8px}
 .bar-track{height:7px;background:var(--sf2);border-radius:4px;overflow:hidden}
 .bar-fill{height:100%;border-radius:4px;transition:width .6s ease}
-
-/* MODAIS */
 .ov{display:none;position:fixed;inset:0;background:rgba(0,0,0,.85);z-index:100;align-items:center;justify-content:center}
 .ov.open{display:flex}
 .mod{background:var(--sf);border:1px solid var(--bd2);border-radius:14px;padding:24px 26px;width:440px;max-width:95vw}
@@ -85,14 +67,8 @@ html,body{height:100vh;overflow:hidden;background:var(--bg);color:var(--tx);font
 .ls{font-size:13px;padding:8px 12px;border-radius:6px;margin-top:8px;display:none}
 .ls.ok{background:rgba(29,214,160,.1);color:var(--gr);display:block}
 .ls.er{background:rgba(247,95,95,.1);color:var(--rd);display:block}
-.steps{list-style:none;counter-reset:s}
-.steps li{counter-increment:s;display:flex;gap:8px;margin-bottom:7px;font-size:12px;color:var(--mt);align-items:flex-start}
-.steps li::before{content:counter(s);background:var(--bl);color:#fff;width:20px;height:20px;min-width:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;margin-top:1px}
-.mod code{background:var(--sf2);padding:2px 5px;border-radius:3px;color:var(--bl);font-size:11px}
-
 .notice{position:fixed;bottom:12px;left:50%;transform:translateX(-50%);background:var(--sf);border:1px solid var(--bd2);border-radius:8px;padding:7px 18px;font-size:13px;color:var(--mt);z-index:5;white-space:nowrap}
-.notice.ok{border-color:rgba(29,214,160,.3);color:var(--gr)}
-.notice.er{border-color:rgba(247,95,95,.3);color:var(--rd)}
+.notice.ok{border-color:rgba(29,214,160,.3);color:var(--gr)}.notice.er{border-color:rgba(247,95,95,.3);color:var(--rd)}
 </style>
 </head>
 <body>
@@ -107,85 +83,33 @@ html,body{height:100vh;overflow:hidden;background:var(--bg);color:var(--tx);font
       <button class="btn btn-b" onclick="doFetch()">↺ Atualizar</button>
     </div>
   </div>
-
   <div class="body">
-    <!-- Q1: Aguardando + Leads -->
     <div class="quad">
       <div class="quad-title">Aguardando atendimento</div>
       <div class="wait-grid">
-        <div class="wcard cy">
-          <div><div class="wlbl">Aguardando</div><div class="wdept">Comercial PF</div></div>
-          <div class="wval y" id="w_pf">—</div>
-          <div class="wbadge bw">em fila</div>
-        </div>
-        <div class="wcard cy">
-          <div><div class="wlbl">Aguardando</div><div class="wdept">Comercial PJ</div></div>
-          <div class="wval y" id="w_pj">—</div>
-          <div class="wbadge bw">em fila</div>
-        </div>
-        <div class="wcard cy">
-          <div><div class="wlbl">Aguardando</div><div class="wdept">Loja Online</div></div>
-          <div class="wval y" id="w_loja">—</div>
-          <div class="wbadge bw">em fila</div>
-        </div>
-        <div class="wcard cb">
-          <div><div class="wlbl">Leads</div><div class="wdept">Sem atendente</div></div>
-          <div class="wval b" id="leads_total">—</div>
-          <div class="wbadge bb">aguardando</div>
-        </div>
+        <div class="wcard cy"><div><div class="wlbl">Aguardando</div><div class="wdept">Comercial PF</div></div><div class="wval y" id="w_pf">—</div><div class="wbadge bw">em fila</div></div>
+        <div class="wcard cy"><div><div class="wlbl">Aguardando</div><div class="wdept">Comercial PJ</div></div><div class="wval y" id="w_pj">—</div><div class="wbadge bw">em fila</div></div>
+        <div class="wcard cy"><div><div class="wlbl">Aguardando</div><div class="wdept">Loja Online</div></div><div class="wval y" id="w_loja">—</div><div class="wbadge bw">em fila</div></div>
+        <div class="wcard cb"><div><div class="wlbl">Leads</div><div class="wdept">Sem atendente</div></div><div class="wval b" id="leads_total">—</div><div class="wbadge bb">aguardando</div></div>
       </div>
     </div>
-
-    <!-- Q2: Totais -->
     <div class="quad">
       <div class="quad-title">Visão geral</div>
       <div class="totals-grid">
-        <div class="tcard cr">
-          <div class="tlbl">Total aguardando</div>
-          <div class="tval r" id="total_wait">—</div>
-          <div class="tsub">todos os departamentos</div>
-        </div>
-        <div class="tcard cg">
-          <div class="tlbl">Em atendimento agora</div>
-          <div class="tval g" id="em_atend">—</div>
-          <div class="tsub">ativos na plataforma</div>
-        </div>
-        <div class="tcard cp">
-          <div class="tlbl">Finalizados</div>
-          <div class="tval p" id="finalizados">—</div>
-          <div class="tsub">total encerrados</div>
-        </div>
-        <div class="tcard cb">
-          <div class="tlbl">Total de conversas</div>
-          <div class="tval b" id="total_conv">—</div>
-          <div class="tsub">todas as interações</div>
-        </div>
+        <div class="tcard cr"><div class="tlbl">Total aguardando</div><div class="tval r" id="total_wait">—</div><div class="tsub">todos os departamentos</div></div>
+        <div class="tcard cg"><div class="tlbl">Em atendimento agora</div><div class="tval g" id="em_atend">—</div><div class="tsub">ativos na plataforma</div></div>
+        <div class="tcard cp"><div class="tlbl">Finalizados</div><div class="tval p" id="finalizados">—</div><div class="tsub">total encerrados</div></div>
+        <div class="tcard cb"><div class="tlbl">Total de conversas</div><div class="tval b" id="total_conv">—</div><div class="tsub">todas as interações</div></div>
       </div>
     </div>
-
-    <!-- Q3: Ativos por depto -->
     <div class="quad">
       <div class="quad-title">Chats ativos por departamento</div>
       <div class="dept-grid">
-        <div class="dcard">
-          <div><div class="dlbl">Ativos agora</div><div class="ddept">Comercial PF</div></div>
-          <div class="dval" id="new_pf">—</div>
-          <div class="dbadge">em atendimento</div>
-        </div>
-        <div class="dcard">
-          <div><div class="dlbl">Ativos agora</div><div class="ddept">Comercial PJ</div></div>
-          <div class="dval" id="new_pj">—</div>
-          <div class="dbadge">em atendimento</div>
-        </div>
-        <div class="dcard">
-          <div><div class="dlbl">Ativos agora</div><div class="ddept">Loja Online</div></div>
-          <div class="dval" id="new_loja">—</div>
-          <div class="dbadge">em atendimento</div>
-        </div>
+        <div class="dcard"><div><div class="dlbl">Ativos agora</div><div class="ddept">Comercial PF</div></div><div class="dval" id="new_pf">—</div><div class="dbadge">em atendimento</div></div>
+        <div class="dcard"><div><div class="dlbl">Ativos agora</div><div class="ddept">Comercial PJ</div></div><div class="dval" id="new_pj">—</div><div class="dbadge">em atendimento</div></div>
+        <div class="dcard"><div><div class="dlbl">Ativos agora</div><div class="ddept">Loja Online</div></div><div class="dval" id="new_loja">—</div><div class="dbadge">em atendimento</div></div>
       </div>
     </div>
-
-    <!-- Q4: Barras atendentes -->
     <div class="quad">
       <div class="quad-title">Atendentes ativos — tempo real</div>
       <div class="bars" id="bars"><div style="color:var(--mt);font-size:14px">Aguardando...</div></div>
@@ -195,7 +119,6 @@ html,body{height:100vh;overflow:hidden;background:var(--bg);color:var(--tx);font
 
 <div class="notice" id="notice" style="display:none"></div>
 
-<!-- Modal login -->
 <div class="ov" id="loginModal">
   <div class="mod">
     <h3>Login automático</h3>
@@ -212,16 +135,9 @@ html,body{height:100vh;overflow:hidden;background:var(--bg);color:var(--tx);font
   </div>
 </div>
 
-<!-- Modal token manual -->
 <div class="ov" id="tm">
   <div class="mod">
     <h3>Token manual</h3>
-    <ol class="steps">
-      <li>Abra o SMClick no Chrome com login ativo</li>
-      <li><code>Cmd+Option+I</code> → Network → Fetch/XHR</li>
-      <li>Recarregue → clique em <code>overview/</code></li>
-      <li>Copie o valor de <strong>Authorization</strong></li>
-    </ol>
     <label class="fl">Token (Bearer eyJ...)</label>
     <textarea class="fi" id="newToken" rows="3" placeholder="Bearer eyJhbGci..."></textarea>
     <div class="ma">
@@ -232,9 +148,11 @@ html,body{height:100vh;overflow:hidden;background:var(--bg);color:var(--tx);font
 </div>
 
 <script>
-const PROXY = window.location.origin + '/proxy';
+// ── Tudo usa window.location.origin — funciona local E no Render ──
+const BASE    = window.location.origin;
+const PROXY   = BASE + '/proxy';
 const INTERVAL = 60;
-const COLORS   = ['#4f8ef7','#1dd6a0','#a78bfa','#f7c94f','#f75f5f','#4fc3f7','#81c784','#ffb74d','#f48fb1','#80cbc4'];
+const COLORS  = ['#4f8ef7','#1dd6a0','#a78bfa','#f7c94f','#f75f5f','#4fc3f7','#81c784','#ffb74d','#f48fb1','#80cbc4'];
 
 function matchDept(name,key){
   const n=(name||'').trim();
@@ -246,21 +164,9 @@ function matchDept(name,key){
 
 setInterval(()=>{document.getElementById('ck').textContent=new Date().toLocaleTimeString('pt-BR');},1000);
 
-function setSt(s,t){
-  const m={demo:'pd',live:'pl',error:'pe',sync:'ps'};
-  document.getElementById('sp').className='pill '+(m[s]||'pd');
-  document.getElementById('st').textContent=t;
-}
-function showNotice(cls,msg,ms=3000){
-  const el=document.getElementById('notice');
-  el.className='notice '+cls;el.textContent=msg;el.style.display='block';
-  setTimeout(()=>el.style.display='none',ms);
-}
-function setVal(id,val){
-  if(val===undefined||val===null||val==='')return;
-  const el=document.getElementById(id);if(!el)return;
-  el.textContent=val;
-}
+function setSt(s,t){const m={demo:'pd',live:'pl',error:'pe',sync:'ps'};document.getElementById('sp').className='pill '+(m[s]||'pd');document.getElementById('st').textContent=t;}
+function showNotice(cls,msg,ms=3000){const el=document.getElementById('notice');el.className='notice '+cls;el.textContent=msg;el.style.display='block';setTimeout(()=>el.style.display='none',ms);}
+function setVal(id,val){if(val===undefined||val===null||val==='')return;const el=document.getElementById(id);if(!el)return;el.textContent=val;}
 function initials(n){const p=(n||'?').trim().split(' ');return(p[0][0]+(p[1]?p[1][0]:'')).toUpperCase();}
 
 function renderBars(list){
@@ -268,15 +174,11 @@ function renderBars(list){
   const sorted=list.sort((a,b)=>b.count-a.count).slice(0,10);
   const max=sorted[0].count||1;
   document.getElementById('bars').innerHTML=sorted.map((a,i)=>{
-    const col=COLORS[i%COLORS.length];
-    const pct=Math.round((a.count/max)*100);
+    const col=COLORS[i%COLORS.length],pct=Math.round((a.count/max)*100);
     return `<div class="bar-row">
       <div class="bar-av" style="background:${col}22;border:1px solid ${col}55;color:${col}">${initials(a.name)}</div>
       <div class="bar-info">
-        <div class="bar-top">
-          <span class="bar-name">${a.name}</span>
-          <span class="bar-num" style="color:${col}">${a.count}</span>
-        </div>
+        <div class="bar-top"><span class="bar-name">${a.name}</span><span class="bar-num" style="color:${col}">${a.count}</span></div>
         <div class="bar-track"><div class="bar-fill" style="width:${pct}%;background:${col}"></div></div>
       </div>
     </div>`;
@@ -292,8 +194,7 @@ function handleOverview(d){
 }
 
 function handleChatsMetrics(d,status){
-  const depts=d?.data?.department||[];
-  const atts=d?.data?.attendant||[];
+  const depts=d?.data?.department||[],atts=d?.data?.attendant||[];
   depts.forEach(item=>{
     const name=item.name,qty=item.quantity??0;
     if(status==='waiting'){
@@ -328,9 +229,18 @@ async function doFetch(){
   setSt('sync','...');
   tokenExpired=false;
   try{
-    const s=await fetch('http://localhost:3456/status').then(r=>r.json());
-    if(!s.ok&&!s.hasCredentials){setSt('error','Sem login');showNotice('er','Configure o login — clique em ⚙ Login',5000);return;}
-  }catch(e){setSt('error','Offline');showNotice('er','Proxy offline — rode node proxy.js',5000);return;}
+    // ← CORRIGIDO: usa BASE (window.location.origin), não localhost
+    const s=await fetch(BASE+'/status').then(r=>r.json());
+    if(!s.ok&&!s.hasCredentials){
+      setSt('error','Sem login');
+      showNotice('er','Configure o login — clique em ⚙ Login',5000);
+      return;
+    }
+  }catch(e){
+    setSt('error','Offline');
+    showNotice('er','Servidor offline',5000);
+    return;
+  }
 
   const ov=await fetchOne('/overview/');
   if(ov)handleOverview(ov);
@@ -353,9 +263,10 @@ async function doLogin(){
   if(!email||!password){st.className='ls er';st.textContent='Preencha email e senha.';return;}
   st.className='ls';st.textContent='Aguarde...';st.style.display='block';
   try{
-    const r=await fetch('http://localhost:3456/setcredentials',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email,password})});
+    // ← CORRIGIDO: usa BASE
+    const r=await fetch(BASE+'/setcredentials',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email,password})});
     const d=await r.json();
-    if(d.ok){st.className='ls ok';st.textContent='✓ Login feito! Renovará automaticamente.';setTimeout(()=>{closeModal('loginModal');doFetch();},1200);}
+    if(d.ok){st.className='ls ok';st.textContent='✓ Login feito!';setTimeout(()=>{closeModal('loginModal');doFetch();},1200);}
     else{st.className='ls er';st.textContent='✗ Falhou. Verifique email e senha.';}
   }catch(e){st.className='ls er';st.textContent='✗ Erro: '+e.message;}
 }
@@ -363,7 +274,7 @@ async function doLogin(){
 async function applyNewToken(){
   let raw=document.getElementById('newToken').value.trim();if(!raw)return;
   const token=raw.startsWith('Bearer ')?raw.substring(7):raw;
-  await fetch(`http://localhost:3456/settoken?token=${encodeURIComponent(token)}`);
+  await fetch(`${BASE}/settoken?token=${encodeURIComponent(token)}`);
   closeModal('tm');tokenExpired=false;document.getElementById('btnToken').style.display='none';doFetch();
 }
 
