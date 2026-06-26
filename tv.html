@@ -5,77 +5,103 @@
 <title>Pizzinatto — TV</title>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-:root{--bg:#0a0d14;--sf:#111520;--bd:#1a2035}
-html,body{height:100vh;overflow:hidden;background:var(--bg);font-family:'Inter',system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+html,body{height:100vh;overflow:hidden;background:#080b12;font-family:'Inter',system-ui,sans-serif;-webkit-font-smoothing:antialiased}
 
-.root{display:grid;grid-template-rows:80fr 20fr;height:100vh;gap:0;padding:12px;gap:10px}
+.root{display:grid;grid-template-rows:auto 1fr auto;height:100vh;padding:16px;gap:12px}
 
-/* ── TOP 80% — 4 cards lado a lado ── */
-.cards{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;min-height:0}
+/* ── TÍTULO TOPO ── */
+.titulo{text-align:center;flex-shrink:0}
+.titulo h1{
+  font-size:clamp(32px,5vw,72px);
+  font-weight:900;
+  letter-spacing:6px;
+  text-transform:uppercase;
+  color:#ffffff;
+  opacity:.15;
+  line-height:1;
+}
 
-.card{border-radius:16px;border:1px solid;display:flex;flex-direction:column;justify-content:center;align-items:center;padding:20px;text-align:center;min-height:0}
+/* ── 4 CARDS ── */
+.cards{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;min-height:0}
 
-/* Cores por card */
-.card-pf  { border-color:#ffffff22; background:#ffffff08; }
-.card-pj  { border-color:#f7c94f44; background:#f7c94f08; }
-.card-loja{ border-color:#4fc3f744; background:#4fc3f708; }
-.card-lead{ border-color:#1dd6a044; background:#1dd6a008; }
+.card{
+  border-radius:20px;
+  border:1px solid;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  padding:24px 16px;
+  gap:20px;
+  min-height:0;
+}
+
+.card-pf  {border-color:#ffffff18;background:linear-gradient(160deg,#ffffff06 0%,#ffffff02 100%)}
+.card-pj  {border-color:#f7c94f22;background:linear-gradient(160deg,#f7c94f08 0%,#f7c94f02 100%)}
+.card-loja{border-color:#4fc3f722;background:linear-gradient(160deg,#4fc3f708 0%,#4fc3f702 100%)}
+.card-lead{border-color:#1dd6a022;background:linear-gradient(160deg,#1dd6a008 0%,#1dd6a002 100%)}
 
 .c-label{
-  font-size:clamp(14px,2vw,28px);
-  font-weight:700;
-  letter-spacing:.5px;
+  font-size:clamp(18px,2.8vw,48px);
+  font-weight:800;
+  letter-spacing:4px;
   text-transform:uppercase;
-  margin-bottom:16px;
-  opacity:.85;
+  text-align:center;
+  line-height:1;
 }
 .c-value{
-  font-size:clamp(80px,14vw,220px);
+  font-size:clamp(100px,18vw,280px);
   font-weight:900;
   line-height:1;
-  letter-spacing:-4px;
+  letter-spacing:-6px;
+  text-align:center;
 }
 
-.card-pf   .c-label, .card-pf   .c-value { color:#ffffff; }
-.card-pj   .c-label, .card-pj   .c-value { color:#f7c94f; }
-.card-loja .c-label, .card-loja .c-value { color:#4fc3f7; }
-.card-lead .c-label, .card-lead .c-value { color:#1dd6a0; }
+.card-pf   .c-label,.card-pf   .c-value{color:#ffffff}
+.card-pj   .c-label,.card-pj   .c-value{color:#f7c94f}
+.card-loja .c-label,.card-loja .c-value{color:#4fc3f7}
+.card-lead .c-label,.card-lead .c-value{color:#1dd6a0}
 
-/* ── BOTTOM 20% — atendentes horizontal ── */
-.bottom{background:var(--sf);border:1px solid var(--bd);border-radius:14px;padding:10px 16px;display:flex;flex-direction:column;min-height:0;overflow:hidden}
-.bottom-title{font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:#3a4268;margin-bottom:8px;flex-shrink:0}
-.bars-h{display:flex;flex-direction:row;gap:10px;flex:1;overflow:hidden;align-items:stretch}
+/* ── BOTTOM — atendentes ── */
+.bottom{background:#111520;border:1px solid #1a2035;border-radius:14px;padding:10px 16px 12px;display:flex;flex-direction:column;gap:6px;flex-shrink:0}
+.bottom-title{font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#2a3255}
+.bars-h{display:flex;flex-direction:row;gap:8px;align-items:flex-end;height:60px}
 
-.bar-col{display:flex;flex-direction:column;align-items:center;gap:4px;flex:1;min-width:0}
-.bar-name-h{font-size:clamp(9px,1vw,13px);font-weight:700;color:#ccd6f6;text-align:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;width:100%}
-.bar-num-h{font-size:clamp(11px,1.2vw,16px);font-weight:900;text-align:center}
-.bar-track-v{flex:1;background:#1a2035;border-radius:4px;overflow:hidden;width:100%;display:flex;flex-direction:column;justify-content:flex-end}
+.bar-col{display:flex;flex-direction:column;align-items:center;gap:3px;flex:1;min-width:0;height:100%}
+.bar-num-h{font-size:clamp(10px,1.1vw,15px);font-weight:900;text-align:center;flex-shrink:0}
+.bar-track-v{flex:1;background:#1a2035;border-radius:4px;overflow:hidden;width:100%;min-height:0}
 .bar-fill-v{width:100%;border-radius:4px;transition:height .6s ease}
+.bar-name-h{font-size:clamp(9px,.9vw,13px);font-weight:600;color:#8892b0;text-align:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;width:100%;flex-shrink:0}
 
-/* pill de status no canto */
-.status-pill{position:fixed;top:10px;right:10px;font-size:11px;font-weight:700;padding:4px 12px;border-radius:20px;z-index:10}
+/* status */
+.pill{position:fixed;top:12px;right:12px;font-size:11px;font-weight:700;padding:4px 12px;border-radius:20px;z-index:10;display:flex;align-items:center;gap:5px}
 .pl{background:rgba(29,214,160,.12);color:#1dd6a0}
 .pe{background:rgba(247,95,95,.12);color:#f75f5f}
 .ps{background:rgba(79,142,247,.12);color:#4f8ef7}
 .pd{background:rgba(247,201,79,.12);color:#f7c94f}
-.dot{width:6px;height:6px;border-radius:50%;background:currentColor;display:inline-block;margin-right:4px;animation:blink 2s infinite}
+.dot{width:6px;height:6px;border-radius:50%;background:currentColor;animation:blink 2s infinite}
 @keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
 </style>
 </head>
 <body>
 
-<div class="status-pill pd" id="sp"><span class="dot"></span><span id="st">Conectando...</span></div>
+<div class="pill pd" id="sp"><span class="dot"></span><span id="st">Conectando...</span></div>
 
 <div class="root">
 
-  <!-- 80%: 4 cards -->
+  <!-- TÍTULO -->
+  <div class="titulo">
+    <h1>Chats Aguardando</h1>
+  </div>
+
+  <!-- 4 CARDS -->
   <div class="cards">
     <div class="card card-pf">
-      <div class="c-label">Aguardando PF</div>
+      <div class="c-label">PF</div>
       <div class="c-value" id="w_pf">—</div>
     </div>
     <div class="card card-pj">
-      <div class="c-label">Aguardando PJ</div>
+      <div class="c-label">PJ</div>
       <div class="c-value" id="w_pj">—</div>
     </div>
     <div class="card card-loja">
@@ -88,11 +114,11 @@ html,body{height:100vh;overflow:hidden;background:var(--bg);font-family:'Inter',
     </div>
   </div>
 
-  <!-- 20%: atendentes horizontal -->
+  <!-- ATENDENTES -->
   <div class="bottom">
     <div class="bottom-title">Atendentes ativos</div>
     <div class="bars-h" id="bars-h">
-      <div style="color:#3a4268;font-size:12px;align-self:center">Aguardando dados...</div>
+      <div style="color:#2a3255;font-size:12px">Aguardando...</div>
     </div>
   </div>
 
@@ -102,7 +128,7 @@ html,body{height:100vh;overflow:hidden;background:var(--bg);font-family:'Inter',
 const BASE     = window.location.origin;
 const PROXY    = BASE + '/proxy';
 const INTERVAL = 60;
-const COLORS   = ['#ffffff','#f7c94f','#4fc3f7','#1dd6a0','#a78bfa','#f75f5f','#ffb74d','#f48fb1','#80cbc4','#81c784'];
+const COLORS   = ['#ffffff','#f7c94f','#4fc3f7','#1dd6a0','#a78bfa','#f75f5f','#ffb74d','#f48fb1','#80cbc4','#81c784','#4f8ef7','#e0e0e0','#ffcc80','#80deea'];
 
 function matchDept(name,key){
   const n=(name||'').trim();
@@ -114,7 +140,7 @@ function matchDept(name,key){
 
 function setSt(s,t){
   const m={demo:'pd',live:'pl',error:'pe',sync:'ps'};
-  document.getElementById('sp').className='status-pill '+(m[s]||'pd');
+  document.getElementById('sp').className='pill '+(m[s]||'pd');
   document.getElementById('st').textContent=t;
 }
 function setVal(id,val){
@@ -122,7 +148,6 @@ function setVal(id,val){
   const el=document.getElementById(id);if(!el)return;
   el.textContent=val;
 }
-function initials(n){const p=(n||'?').trim().split(' ');return(p[0][0]+(p[1]?p[1][0]:'')).toUpperCase();}
 
 function renderBarsH(list){
   if(!list||!list.length)return;
@@ -131,12 +156,13 @@ function renderBarsH(list){
   document.getElementById('bars-h').innerHTML=sorted.map((a,i)=>{
     const col=COLORS[i%COLORS.length];
     const pct=Math.round((a.count/max)*100);
+    const nome=a.name.split(' ')[0];
     return `<div class="bar-col">
       <div class="bar-num-h" style="color:${col}">${a.count}</div>
       <div class="bar-track-v">
-        <div class="bar-fill-v" style="height:${pct}%;background:${col}88"></div>
+        <div class="bar-fill-v" style="height:${pct}%;background:${col}99"></div>
       </div>
-      <div class="bar-name-h">${a.name.split(' ')[0]}</div>
+      <div class="bar-name-h">${nome}</div>
     </div>`;
   }).join('');
 }
@@ -160,15 +186,15 @@ async function doFetch(){
   }catch(e){setSt('error','Offline');return;}
 
   const ov=await fetchOne('/overview/');
-  if(ov) setVal('leads_total', ov.qtd_screening_attendances);
+  if(ov) setVal('leads_total',ov.qtd_screening_attendances);
 
   const w=await fetchOne('/chats/metrics/','?status=waiting');
   if(w){
     (w?.data?.department||[]).forEach(item=>{
-      const name=item.name, qty=item.quantity??0;
-      if(matchDept(name,'pf'))   setVal('w_pf',   qty);
-      if(matchDept(name,'pj'))   setVal('w_pj',   qty);
-      if(matchDept(name,'loja')) setVal('w_loja',  qty);
+      const name=item.name,qty=item.quantity??0;
+      if(matchDept(name,'pf'))   setVal('w_pf',  qty);
+      if(matchDept(name,'pj'))   setVal('w_pj',  qty);
+      if(matchDept(name,'loja')) setVal('w_loja', qty);
     });
   }
 
