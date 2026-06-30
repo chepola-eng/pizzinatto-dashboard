@@ -63,14 +63,14 @@ html,body{height:100vh;overflow:hidden;background:#080b12;font-family:'Inter',sy
 
 /* ── BOTTOM — atendentes ── */
 .bottom{background:#111520;border:1px solid #1a2035;border-radius:14px;padding:10px 16px 12px;display:flex;flex-direction:column;gap:6px;flex-shrink:0}
-.bottom-title{font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#2a3255}
-.bars-h{display:flex;flex-direction:row;gap:8px;align-items:flex-end;height:60px}
+.bottom-title{font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#ffffff}
+.bars-h{display:flex;flex-direction:row;gap:8px;align-items:flex-end;height:120px}
 
 .bar-col{display:flex;flex-direction:column;align-items:center;gap:3px;flex:1;min-width:0;height:100%}
 .bar-num-h{font-size:clamp(10px,1.1vw,15px);font-weight:900;text-align:center;flex-shrink:0}
-.bar-track-v{flex:1;background:#1a2035;border-radius:4px;overflow:hidden;width:100%;min-height:0}
+.bar-track-v{flex:1;background:#ffffff1a;border-radius:4px;overflow:hidden;width:100%;min-height:0}
 .bar-fill-v{width:100%;border-radius:4px;transition:height .6s ease}
-.bar-name-h{font-size:clamp(9px,.9vw,13px);font-weight:600;color:#8892b0;text-align:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;width:100%;flex-shrink:0}
+.bar-name-h{font-size:clamp(9px,.9vw,13px);font-weight:600;color:#ffffff;text-align:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;width:100%;flex-shrink:0}
 
 /* status */
 .pill{position:fixed;top:12px;right:12px;font-size:11px;font-weight:700;padding:4px 12px;border-radius:20px;z-index:10;display:flex;align-items:center;gap:5px}
@@ -115,7 +115,7 @@ html,body{height:100vh;overflow:hidden;background:#080b12;font-family:'Inter',sy
 
   <!-- ATENDENTES -->
   <div class="bottom">
-    <div class="bottom-title">Atendentes ativos</div>
+    <div class="bottom-title">Atendimentos em espera</div>
     <div class="bars-h" id="bars-h">
       <div style="color:#2a3255;font-size:12px">Aguardando...</div>
     </div>
@@ -127,7 +127,7 @@ html,body{height:100vh;overflow:hidden;background:#080b12;font-family:'Inter',sy
 const BASE     = window.location.origin;
 const PROXY    = BASE + '/proxy';
 const INTERVAL = 60;
-const COLORS   = ['#ffffff','#f7c94f','#4fc3f7','#1dd6a0','#a78bfa','#f75f5f','#ffb74d','#f48fb1','#80cbc4','#81c784','#4f8ef7','#e0e0e0','#ffcc80','#80deea'];
+const COLORS   = ['#ffffff'];
 
 function matchDept(name,key){
   const n=(name||'').trim();
@@ -195,15 +195,12 @@ async function doFetch(){
       if(matchDept(name,'pj'))   setVal('w_pj',  qty);
       if(matchDept(name,'loja')) setVal('w_loja', qty);
     });
-  }
 
-  const a=await fetchOne('/chats/metrics/','?status=active');
-  if(a){
-    const atts=a?.data?.attendant||[];
+    const atts=w?.data?.attendant||[];
     if(atts.length) renderBarsH(atts.map(x=>({name:x.name,count:x.quantity??0})));
   }
 
-  if(ov||w||a) setSt('live','Ao vivo');
+  if(ov||w) setSt('live','Ao vivo');
   else setSt('error','Sem dados');
 }
 
