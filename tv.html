@@ -246,10 +246,15 @@ async function doFetch(){
     if(atts.length) renderBarsH(atts.map(x=>({name:x.name,count:x.quantity??0})));
   }
 
-  // Atendidos no dia → ranking por vendedor
-  // Tenta status=finished, fallback para status=closed
-  let f=await fetchOne('/chats/metrics/','?status=finished');
-  if(!f||!(f?.data?.attendant?.length)) f=await fetchOne('/chats/metrics/','?status=closed');
+  // Atendidos no dia → ranking por vendedor (filtra por hoje)
+  const hoje=new Date().toISOString().slice(0,10); // YYYY-MM-DD
+  let f=await fetchOne('/chats/metrics/',`?status=finished&date=${hoje}`);
+  if(!f||!(f?.data?.attendant?.length))
+    f=await fetchOne('/chats/metrics/',`?status=finished&start_date=${hoje}&end_date=${hoje}`);
+  if(!f||!(f?.data?.attendant?.length))
+    f=await fetchOne('/chats/metrics/',`?status=closed&date=${hoje}`);
+  if(!f||!(f?.data?.attendant?.length))
+    f=await fetchOne('/chats/metrics/',`?status=closed&start_date=${hoje}&end_date=${hoje}`);
   if(f){
     const atts=f?.data?.attendant||[];
     renderRanking(atts.map(x=>({name:x.name,count:x.quantity??0})));
