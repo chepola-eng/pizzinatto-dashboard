@@ -7,7 +7,7 @@
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html,body{height:100vh;overflow:hidden;background:#080b12;font-family:'Inter',system-ui,sans-serif;-webkit-font-smoothing:antialiased}
 
-.root{display:grid;grid-template-rows:auto 1fr auto auto;height:100vh;padding:16px;gap:10px}
+.root{display:grid;grid-template-rows:auto 1fr auto;height:100vh;padding:16px;gap:12px}
 
 /* ── TÍTULO TOPO ── */
 .titulo{text-align:center;flex-shrink:0}
@@ -49,7 +49,7 @@ html,body{height:100vh;overflow:hidden;background:#080b12;font-family:'Inter',sy
   line-height:1;
 }
 .c-value{
-  font-size:clamp(80px,14vw,220px);
+  font-size:clamp(100px,18vw,280px);
   font-weight:900;
   line-height:1;
   letter-spacing:-6px;
@@ -61,35 +61,16 @@ html,body{height:100vh;overflow:hidden;background:#080b12;font-family:'Inter',sy
 .card-loja .c-label,.card-loja .c-value{color:#4fc3f7}
 .card-lead .c-label,.card-lead .c-value{color:#1dd6a0}
 
-/* ── SEÇÕES BOTTOM ── */
+/* ── BOTTOM — atendentes ── */
 .bottom{background:#111520;border:1px solid #1a2035;border-radius:14px;padding:10px 16px 12px;display:flex;flex-direction:column;gap:6px;flex-shrink:0}
-.bottom-espera{border-color:#ffffff18}
-.bottom-atendidos{border-color:#f7c94f22}
-
-.bottom-title{font-size:clamp(16px,2vw,30px);font-weight:700;letter-spacing:2px;text-transform:uppercase}
-.bottom-espera   .bottom-title{color:#ffffff}
-.bottom-atendidos .bottom-title{color:#f7c94f}
-
-/* ── BARRAS VERTICAIS (em espera) ── */
-.bars-h{display:flex;flex-direction:row;gap:8px;align-items:flex-end;height:140px}
+.bottom-title{font-size:30px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#ffffff}
+.bars-h{display:flex;flex-direction:row;gap:8px;align-items:flex-end;height:160px}
 
 .bar-col{display:flex;flex-direction:column;align-items:center;gap:3px;flex:1;min-width:0;height:100%}
-.bar-num-h{font-size:clamp(22px,2.5vw,38px);font-weight:900;text-align:center;flex-shrink:0;color:#ffffff}
+.bar-num-h{font-size:clamp(30px,3.3vw,45px);font-weight:900;text-align:center;flex-shrink:0}
 .bar-track-v{flex:1;background:#ffffff1a;border-radius:4px;overflow:hidden;width:100%;min-height:0}
-.bar-fill-v{width:100%;border-radius:4px;transition:height .6s ease;background:#ffffff}
-.bar-name-h{font-size:clamp(16px,1.8vw,28px);font-weight:600;color:#ffffff;text-align:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;width:100%;flex-shrink:0}
-
-/* ── RANKING HORIZONTAL (atendidos no dia) ── */
-.ranking{display:flex;flex-direction:row;gap:12px;align-items:center;flex-wrap:nowrap;overflow:hidden}
-
-.rank-item{display:flex;flex-direction:column;align-items:center;gap:4px;flex:1;min-width:0}
-.rank-pos{font-size:clamp(11px,1vw,16px);font-weight:700;color:#f7c94f88;letter-spacing:1px}
-.rank-nome{font-size:clamp(14px,1.5vw,24px);font-weight:700;color:#ffffff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;width:100%;text-align:center}
-.rank-bar-wrap{width:100%;height:28px;background:#f7c94f1a;border-radius:6px;overflow:hidden}
-.rank-bar-fill{height:100%;border-radius:6px;background:#f7c94f;transition:width .6s ease}
-.rank-count{font-size:clamp(20px,2.2vw,34px);font-weight:900;color:#f7c94f;text-align:center}
-
-.rank-sem-dados{color:#2a3255;font-size:14px;padding:8px 0}
+.bar-fill-v{width:100%;border-radius:4px;transition:height .6s ease}
+.bar-name-h{font-size:clamp(27px,2.7vw,39px);font-weight:600;color:#ffffff;text-align:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;width:100%;flex-shrink:0}
 
 /* status */
 .pill{position:fixed;top:12px;right:12px;font-size:11px;font-weight:700;padding:4px 12px;border-radius:20px;z-index:10;display:flex;align-items:center;gap:5px}
@@ -132,19 +113,11 @@ html,body{height:100vh;overflow:hidden;background:#080b12;font-family:'Inter',sy
     </div>
   </div>
 
-  <!-- EM ESPERA POR ATENDENTE -->
-  <div class="bottom bottom-espera">
+  <!-- ATENDENTES -->
+  <div class="bottom">
     <div class="bottom-title">Atendimentos em espera</div>
     <div class="bars-h" id="bars-h">
       <div style="color:#2a3255;font-size:12px">Aguardando...</div>
-    </div>
-  </div>
-
-  <!-- ATENDIDOS NO DIA POR VENDEDOR -->
-  <div class="bottom bottom-atendidos">
-    <div class="bottom-title">Atendidos hoje por vendedor</div>
-    <div class="ranking" id="ranking">
-      <div class="rank-sem-dados">Aguardando...</div>
     </div>
   </div>
 
@@ -154,6 +127,7 @@ html,body{height:100vh;overflow:hidden;background:#080b12;font-family:'Inter',sy
 const BASE     = window.location.origin;
 const PROXY    = BASE + '/proxy';
 const INTERVAL = 60;
+const COLORS   = ['#ffffff'];
 
 function matchDept(name,key){
   const n=(name||'').trim();
@@ -178,36 +152,16 @@ function renderBarsH(list){
   if(!list||!list.length)return;
   const sorted=list.sort((a,b)=>b.count-a.count).slice(0,14);
   const max=sorted[0].count||1;
-  document.getElementById('bars-h').innerHTML=sorted.map(a=>{
+  document.getElementById('bars-h').innerHTML=sorted.map((a,i)=>{
+    const col=COLORS[i%COLORS.length];
     const pct=Math.round((a.count/max)*100);
     const nome=a.name.split(' ')[0];
     return `<div class="bar-col">
-      <div class="bar-num-h">${a.count}</div>
+      <div class="bar-num-h" style="color:${col}">${a.count}</div>
       <div class="bar-track-v">
-        <div class="bar-fill-v" style="height:${pct}%"></div>
+        <div class="bar-fill-v" style="height:${pct}%;background:${col}"></div>
       </div>
       <div class="bar-name-h">${nome}</div>
-    </div>`;
-  }).join('');
-}
-
-function renderRanking(list){
-  if(!list||!list.length){
-    document.getElementById('ranking').innerHTML='<div class="rank-sem-dados">Sem dados de hoje</div>';
-    return;
-  }
-  const sorted=list.sort((a,b)=>b.count-a.count).slice(0,14);
-  const max=sorted[0].count||1;
-  const medals=['🥇','🥈','🥉'];
-  document.getElementById('ranking').innerHTML=sorted.map((a,i)=>{
-    const pct=Math.round((a.count/max)*100);
-    const nome=a.name.split(' ')[0];
-    const pos=medals[i]||(i+1)+'º';
-    return `<div class="rank-item">
-      <div class="rank-pos">${pos}</div>
-      <div class="rank-count">${a.count}</div>
-      <div class="rank-bar-wrap"><div class="rank-bar-fill" style="width:${pct}%"></div></div>
-      <div class="rank-nome">${nome}</div>
     </div>`;
   }).join('');
 }
@@ -233,7 +187,6 @@ async function doFetch(){
   const ov=await fetchOne('/overview/');
   if(ov) setVal('leads_total',ov.qtd_screening_attendances);
 
-  // Chats em espera → cards + barras por atendente
   const w=await fetchOne('/chats/metrics/','?status=waiting');
   if(w){
     (w?.data?.department||[]).forEach(item=>{
@@ -242,25 +195,12 @@ async function doFetch(){
       if(matchDept(name,'pj'))   setVal('w_pj',  qty);
       if(matchDept(name,'loja')) setVal('w_loja', qty);
     });
+
     const atts=w?.data?.attendant||[];
     if(atts.length) renderBarsH(atts.map(x=>({name:x.name,count:x.quantity??0})));
   }
 
-  // Atendidos no dia → ranking por vendedor (filtra por hoje)
-  const hoje=new Date().toISOString().slice(0,10); // YYYY-MM-DD
-  let f=await fetchOne('/chats/metrics/',`?status=finished&date=${hoje}`);
-  if(!f||!(f?.data?.attendant?.length))
-    f=await fetchOne('/chats/metrics/',`?status=finished&start_date=${hoje}&end_date=${hoje}`);
-  if(!f||!(f?.data?.attendant?.length))
-    f=await fetchOne('/chats/metrics/',`?status=closed&date=${hoje}`);
-  if(!f||!(f?.data?.attendant?.length))
-    f=await fetchOne('/chats/metrics/',`?status=closed&start_date=${hoje}&end_date=${hoje}`);
-  if(f){
-    const atts=f?.data?.attendant||[];
-    renderRanking(atts.map(x=>({name:x.name,count:x.quantity??0})));
-  }
-
-  if(ov||w||f) setSt('live','Ao vivo');
+  if(ov||w) setSt('live','Ao vivo');
   else setSt('error','Sem dados');
 }
 
