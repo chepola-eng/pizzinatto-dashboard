@@ -173,6 +173,38 @@ const server = http.createServer(async (req, res) => {
     return;
   }
 
+  // Rota de debug: mostra resposta crua da API para descobrir parâmetros de data
+  if (reqPath === '/debug') {
+    if (!BEARER) { res.writeHead(401, jsonHeaders); res.end(JSON.stringify({ error: 'Sem token' })); return; }
+    const hoje = new Date().toISOString().slice(0, 10);
+    const testes = [
+      '/chats/metrics/?status=finished',
+      `/chats/metrics/?status=finished&date=${hoje}`,
+      `/chats/metrics/?status=finished&start_date=${hoje}&end_date=${hoje}`,
+      `/chats/metrics/?status=finished&filter_date=${hoje}`,
+      `/chats/metrics/?status=finished&created_at=${hoje}`,
+      '/chats/metrics/?status=closed',
+      `/chats/metrics/?status=closed&date=${hoje}`,
+    ];
+    const resultados = {};
+    for (const qs of testes) {
+      try {
+        const r = await httpsGet(BASE_V2 + qs, { 'Authorization': `Bearer ${BEARER}`, 'Accept': 'application/json' });
+        let parsed;
+        try { parsed = JSON.parse(r.body); } catch(e) { parsed = { raw: r.body.substring(0, 300) }; }
+        // Mostra só os attendants para não poluir
+        resultados[qs] = {
+          status: r.status,
+          attendant: parsed?.data?.attendant ?? parsed?.attendant ?? '(não encontrado)',
+          keys_data: parsed?.data ? Object.keys(parsed.data) : '(sem data)',
+        };
+      } catch(e) { resultados[qs] = { erro: e.message }; }
+    }
+    res.writeHead(200, { ...CORS, 'Content-Type': 'application/json' });
+    res.end(JSON.stringify({ hoje, resultados }, null, 2));
+    return;
+  }
+
   if (!reqPath.startsWith('/proxy')) {
     res.writeHead(404, jsonHeaders); res.end(JSON.stringify({ error: 'Not found' })); return;
   }
